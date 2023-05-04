@@ -1,0 +1,19 @@
+.Popupmenu-parent {
+    display: flex;
+    justify-content: center;
+    background: #031B34;
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    position: absolute;
+    top: 40%;
+    right: 35%;
+    margin-top: 1rem;
+    width: 300px;
+    border-radius: 20px;
+    box-shadow: 0 0 5 rgba(0, 0, 0, 0.2);
+    border: none;
+    
+}
+
+
