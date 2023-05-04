@@ -113,8 +113,10 @@ const formLogin = async (e)=>{
             </Signin></>}
 
           </div>  
+          <div className='greet_mobile'>
+          {isSigned.status ? <p>Hi, {isSigned.name}</p> : ""}
+          </div>
             <div className="gpt3__navbar-menu">
-              {isSigned.status ? <p style={{color: "white",margin : "0 2vw",textAlign: "center"}}>Hi, {isSigned.name}</p> : ""}
                  {toggleMenu
                  ? <RiCloseLine color="#fff" size={27} onClick={() => setToggleMenu(false)} />
                  : <RiMenu3Line color="#fff" size={27} onClick={() => setToggleMenu(true)}  />}

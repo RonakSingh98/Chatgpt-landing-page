@@ -87,6 +87,10 @@
     display: none;
 }
 
+.greet_mobile{
+    display: none;
+}
+
 @media  screen and (max-width:1050px) {
     .gpt3__navbar-links_container{
         display:none;
@@ -132,6 +136,13 @@
     display:block;
     border: none;
 
+}
+
+.greet_mobile{
+    display:inline-block;
+    color: white;
+    margin : 0 2vw;
+    text-align: center;
 }
 }
 .gpt3__navbar-sign form {
