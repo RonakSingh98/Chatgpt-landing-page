@@ -26,7 +26,7 @@ const Navbar = () => {
 
 const formSubmit = async (e)=>{
   e.preventDefault();
-  let response = await fetch("http://localhost:5001/register",{
+  let response = await fetch("https://live-project-01-delta.vercel.app/register",{
     method : "POST",
     body : JSON.stringify(form),
     headers : {
@@ -40,7 +40,7 @@ const formSubmit = async (e)=>{
 
 const formLogin = async (e)=>{
   e.preventDefault();
-  let response = await fetch("http://localhost:5001/login",{
+  let response = await fetch("https://live-project-01-delta.vercel.app/login",{
     method : "POST",
     body : JSON.stringify(form),
     headers : {
