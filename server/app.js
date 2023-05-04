@@ -8,6 +8,9 @@ const server = express();
 server.use(cors());
 server.use(bodyParser.json());
 
+server.get("/v1/get",(req,res)=>{
+    res.send("Hello")
+})
 server.post("/register", async (req,res)=>{
     const saveUser = new Uservar();
     saveUser.fname = req.body.fname;
