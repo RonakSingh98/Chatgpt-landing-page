@@ -35,7 +35,6 @@ const formSubmit = async (e)=>{
   })
   let jsonobj = await response.json();
   clearForm();
-  console.log(jsonobj);
 }
 
 const formLogin = async (e)=>{
@@ -55,7 +54,6 @@ const formLogin = async (e)=>{
     })
   }
   clearForm();
-  console.log(jsonobj);
 }
 
   const revIsShow = ()=>{
