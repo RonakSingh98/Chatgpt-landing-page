@@ -26,7 +26,7 @@ const Navbar = () => {
 
 const formSubmit = async (e)=>{
   e.preventDefault();
-  let response = await fetch("https://live-project-01-delta.vercel.app/register",{
+  let response = await fetch("https://react-ai-project.vercel.app/register",{
     method : "POST",
     body : JSON.stringify(form),
     headers : {
@@ -39,7 +39,7 @@ const formSubmit = async (e)=>{
 
 const formLogin = async (e)=>{
   e.preventDefault();
-  let response = await fetch("https://live-project-01-delta.vercel.app/login",{
+  let response = await fetch("https://react-ai-project.vercel.app/login",{
     method : "POST",
     body : JSON.stringify(form),
     headers : {
