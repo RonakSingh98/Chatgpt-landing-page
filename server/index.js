@@ -1,48 +1,49 @@
 const express  = require("express");
 const cors = require("cors"); //used to allow cors
-const bodyParser = require("body-parser"); //used to read request body
+const bcrypt = require("bcryptjs");
 const Uservar = require("./registers/register.js");
 require("./connect_db/connect_db.js");
 
 const server = express();
 server.use(cors());
-server.use(bodyParser.json());
+server.use(express.json());
 
-server.get("/v1/get",(req,res)=>{
-    res.send("Hello")
-})
 server.post("/register", async (req,res)=>{
-    const saveUser = new Uservar();
-    saveUser.fname = req.body.fname;
-    saveUser.lname = req.body.lname;
-    saveUser.password = req.body.password;
-    saveUser.email = req.body.email;
     try{
+    const {fname,lname,password,email} = req.body;
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password,salt);
+    const storeData = {
+        fname,lname,email,"password" : hashedPassword
+    }
+    const saveUser = new Uservar(storeData);
         await saveUser.save();
-        res.send({message: "registered",signupstatus:true});
+        return res.send({message: "registered",signupstatus:true});
     }
     catch(Error){
         try{
             let errorPath = Object.keys(Error.errors)[0];
             let message = Error["errors"][errorPath]["message"];
-            res.send({message: message,error: errorPath,signupstatus:false});
+            return res.send({message: message,error: errorPath,signupstatus:false});
         }
         catch{
-            res.send(Error);
+            return res.send(Error);
         }
     }
 })
 
 server.post("/login", async (req,res)=>{
-    const data = await Uservar.findOne({email : req.body.email,password : req.body.password});
+    const {email,password} = req.body;
+    const data = await Uservar.findOne({email});
     let loginstatus = false;
-    if(data == null){
-        res.send({loginstatus});
+    if(data){
+        const comparePass = bcrypt.compareSync(password,data.password);
+        if(comparePass){
+            loginstatus = true;
+            return res.send({fname : data.fname,loginstatus});
+        }
     }
-    else{
-        loginstatus = true;
-        res.send({fname : data.fname,loginstatus});
-    }
+    return res.send({loginstatus});
 })
 
 const port = process.env.PORT || 5001;
