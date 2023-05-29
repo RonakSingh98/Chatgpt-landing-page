@@ -5,7 +5,7 @@ import './navbar.css';
 import Signin from './Signin';
 import Signedin from './Signedin';
 const Navbar = () => {
-  const host = process.env.HOST;
+  const host = process.env.BACKEND_SERVER;
   const [toggleMenu ,setToggleMenu] = useState(false);
   const [isShow,setIsShow] = useState(false);
   const [isShow2,setIsShow2] = useState(false);
