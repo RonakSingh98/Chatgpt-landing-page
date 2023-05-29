@@ -5,7 +5,7 @@ import './navbar.css';
 import Signin from './Signin';
 import Signedin from './Signedin';
 const Navbar = () => {
-  const host = process.env.HOST;
+  const host = process.env.REACT_APP_BACKEND_SERVER;
   const [toggleMenu ,setToggleMenu] = useState(false);
   const [isShow,setIsShow] = useState(false);
   const [isShow2,setIsShow2] = useState(false);
@@ -29,7 +29,7 @@ const Navbar = () => {
       [ent.target.name] : value
     })
     let element = document.getElementById(ent.target.id);
-    if(ent.target.name==="password" && !(element.id==("password1") || element.id==("password3"))){
+    if(ent.target.name==="password" && !(element.id===("password1") || element.id===("password3"))){
       const validatepass = strongpass.test(value);
       if(!validatepass){
         element.style.border = "2px solid red";
@@ -146,7 +146,7 @@ const formLogin = async (e)=>{
             <form onSubmit={(e)=>{setIsShow2(false);return formLogin(e)}}>
             <input  className='Cross' type='submit' value={"X"} onClick={()=>setIsShow2(false)}></input>
             <h3>Email</h3>
-            <input type="email" name="email" onChange={formHandler} placeholder='Enter Email'></input><br/>
+            <input id="email1" type="email" name="email" onChange={formHandler} placeholder='Enter Email'></input><br/>
             <h3>Password</h3>
             <input type="password" name="password" id="password1" onChange={formHandler} placeholder='******'></input><br/><br/>
             <input className='btn' type="submit" value={"submit"}></input>
@@ -159,11 +159,11 @@ const formLogin = async (e)=>{
             <form onSubmit={async (e)=>{return setIsShow(!(await formSubmit(e)))}}>
             <input  className='Cross' type='submit' value={"X"} onClick={()=>setIsShow(false)}></input>
             <h3>First Name</h3>
-            <input type="text" name="fname" onChange={formHandler} placeholder='Enter First Name'></input>
+            <input id="fname2" type="text" name="fname" onChange={formHandler} placeholder='Enter First Name'></input>
             <h3>Last Name</h3>
-            <input type="text" name="lname" onChange={formHandler} placeholder='Enter last Name'></input>
+            <input id="lname2" type="text" name="lname" onChange={formHandler} placeholder='Enter last Name'></input>
             <h3>Email</h3>
-            <input type="email" name="email" onChange={formHandler} placeholder='Enter Email'></input><br/>
+            <input id="email2" type="email" name="email" onChange={formHandler} placeholder='Enter Email'></input><br/>
             <h3>Password</h3>
             <input type="password" name="password" id="password2" onChange={formHandler} placeholder='******'></input><br/><br/>
             <input className='btn' type="submit" value={"submit"}></input>
@@ -195,7 +195,7 @@ const formLogin = async (e)=>{
                          <form className='form2' onSubmit={(e)=>{setToggleMenu(false);setIsShow2(false);return formLogin(e)}}>
                          <input  className='Cross' type='submit' value={"X"} onClick={()=>setIsShow2(false)}></input>
                          <h3>Email</h3>
-                         <input type="email" name="email" onChange={formHandler} placeholder='Enter Email'></input><br/>
+                         <input type="email" id="email3" name="email" onChange={formHandler} placeholder='Enter Email'></input><br/>
                          <h3>Password</h3>
                          <input type="password" name="password" id="password3" onChange={formHandler} placeholder='******'></input><br/><br/>
                          <input className='btn' type="submit" value={"submit"}></input>
@@ -208,11 +208,11 @@ const formLogin = async (e)=>{
                           <form className='form2' onSubmit={async (e)=>{return await formSubmit(e) ? (setToggleMenu(false),setIsShow(false)) : ""}}>
                           <input  className='Cross' type='submit' value={"X"} onClick={()=>setIsShow(false)}></input>
                           <h3>First Name</h3>
-                          <input type="text" name="fname" onChange={formHandler} placeholder='Enter First Name'></input>
+                          <input type="text" id="fname4" name="fname" onChange={formHandler} placeholder='Enter First Name'></input>
                           <h3>Last Name</h3>
-                          <input type="text" name="lname" onChange={formHandler} placeholder='Enter last Name'></input>
+                          <input type="text" id="lname4" name="lname" onChange={formHandler} placeholder='Enter last Name'></input>
                           <h3>Email</h3>
-                          <input type="email" name="email" onChange={formHandler} placeholder='Enter Email'></input><br/>
+                          <input type="email" id="email4" name="email" onChange={formHandler} placeholder='Enter Email'></input><br/>
                           <h3>Password</h3>
                           <input type="password" name="password" id="password4" onChange={formHandler} placeholder='******'></input><br/><br/>
                           <input className='btn' type="submit" value={"submit"}></input>
