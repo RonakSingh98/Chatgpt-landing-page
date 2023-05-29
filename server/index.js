@@ -1,8 +1,10 @@
 const express  = require("express");
 const cors = require("cors"); //used to allow cors
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const Uservar = require("./registers/register.js");
 require("./connect_db/connect_db.js");
+const JWT_KEY = process.env.JWT_KEY;
 
 const server = express();
 server.use(cors());
@@ -39,14 +41,33 @@ server.post("/login", async (req,res)=>{
     if(data){
         const comparePass = bcrypt.compareSync(password,data.password);
         if(comparePass){
+            const payload = {user : {id : data._id}}
             loginstatus = true;
-            return res.send({fname : data.fname,loginstatus});
+            const token = jwt.sign(payload,JWT_KEY);
+            return res.send({fname : data.fname,loginstatus,token});
         }
     }
     return res.send({loginstatus});
 })
 
+server.post("/auth", async (req,res)=>{
+    let loginstatus = false;
+    const token = req.header("user-token");
+    try{
+        if(token){
+            const validateToken = jwt.verify(token,JWT_KEY);
+            const getUser = await Uservar.findById(validateToken.user.id);
+            loginstatus = true;
+            return res.status(200).send({loginstatus,name : getUser.fname});
+        }
+        return res.status(401).send({loginstatus});
+    }
+    catch(err){
+        return res.status(500).send({loginstatus,err});
+    }
+})
+
 const port = process.env.PORT || 5001;
 server.listen(port,()=>{
-    console.log("server started http://localhost:"+port);
+    console.log("server started on port"+port);
 })
