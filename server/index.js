@@ -4,15 +4,25 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Uservar = require("./registers/register.js");
 require("./connect_db/connect_db.js");
-const JWT_KEY = process.env.JWT_KEY;
+// const JWT_KEY = process.env.JWT_KEY;
+const JWT_KEY = "Ankur";
 
 const server = express();
 server.use(cors());
 server.use(express.json());
 
 server.post("/register", async (req,res)=>{
+    // password validation
+    const passRule = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/
     try{
     const {fname,lname,password,email} = req.body;
+    //if password validation failed return error
+    // returns true if password contains : password length > 8,contain atleast one uppercase,lowercase,special character and digit
+    if(!passRule.test(password)){
+       return res.send({signupstatus:false,error: "Password length > 8,contain atleast one uppercase,lowercase,special character and digit"})
+    }
+
+    //encrypt and save password to database
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password,salt);
     const storeData = {
@@ -55,6 +65,7 @@ server.post("/auth", async (req,res)=>{
     const token = req.header("user-token");
     try{
         if(token){
+            //verify token
             const validateToken = jwt.verify(token,JWT_KEY);
             const getUser = await Uservar.findById(validateToken.user.id);
             loginstatus = true;
